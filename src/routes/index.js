@@ -1,6 +1,7 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/PageLayout/PageLayout'
-/*import Home from './Home'*/
+import Home from './Home/components/HomeView'
+import SignUp from './SignUp/containers/SignUpContainer'
 import Login from './Login/containers/LoginContainer'
 import EnsureLoggedIn from './EnsureLoggedIn/containers/EnsureLoggedInContainer'
 
@@ -13,11 +14,20 @@ export const createRoutes = (store) => ([
     component: Login
   },
   {
+    path: '/signup',
+    component: SignUp
+  },
+  {
     component   : EnsureLoggedIn,
     childRoutes : [
       {
-        path: '/',
-        component: CoreLayout
+        component: CoreLayout,
+        childRoutes: [
+          {
+            path: '/',
+            component: Home
+          }
+        ]
       }
     ]
   }

@@ -1,30 +1,21 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
+import { connect } from 'react-redux'
+
+const mapStateToProps = (state) => ({
+  session: state.session
+})
 
 class EnsureLoggedInContainer extends React.Component {
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isLoggedIn: true
-    }
-  }
-
   componentWillMount() {
-    if (!this.state.isLoggedIn) {
+    if (this.props.session.isNotLoggedIn) {
       browserHistory.push("/login")
     }
   }
 
   render() {
-    if (this.state.isLoggedIn) {
-      console.log('enter')
-      return this.props.children
-    } else {
-      return null
-    }
+    return this.props.children
   }
 }
 
-export default EnsureLoggedInContainer
+export default connect(mapStateToProps)(EnsureLoggedInContainer)
